@@ -1,0 +1,6 @@
+{
+  "env": "dev",
+  "baseApi": "https://api.thecatapi.com",
+  "apiKey": "79dea77f-f2ba-4c3e-b5bd-9c156dc439a9",
+  "apiVersion": "v1"
+}
