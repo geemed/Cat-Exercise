@@ -1,19 +1,21 @@
+const webpack = require("webpack");
+const { merge } = require("webpack-merge");
 const path = require("path");
+const fs = require("fs-extra");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
 const EventHooksPlugin = require("event-hooks-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
+
 const appDir = path.resolve(__dirname, "src/app");
 const env = process.env.NODE_ENV === "production" ? "prod" : "dev";
-const fs = require("fs-extra");
 
-module.exports = {
-  devtool: "source-map",
-  devServer: {
-    hot: true,
-    historyApiFallback: true,
-    open: true,
-    port: 3000,
-  },
+const devConfig = require("./webpack.dev"),
+  prodConfig = require("./webpack.prod");
+const envConfig =
+  process.env.NODE_ENV === "production" ? prodConfig : devConfig;
+
+const config = {
   entry: {
     app: "./src/app/index.js",
     style: "./src/styles/index.scss",
@@ -56,9 +58,12 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin({
+      verbose: true,
+      cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, "dist")],
+    }),
     new EventHooksPlugin({
-      compile: (compilation, done) => {
-        console.log("beforeRun");
+      beforeRun: (compilation, done) => {
         fs.copy(
           path.resolve(__dirname, `environments/${env}/config`),
           path.join(appDir, "configs"),
@@ -75,3 +80,5 @@ module.exports = {
     }),
   ],
 };
+
+module.exports = merge(config, envConfig);

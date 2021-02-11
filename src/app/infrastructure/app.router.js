@@ -2,15 +2,17 @@ import React from "react";
 import { Router, Route } from "react-router-dom";
 
 import History from "./app.history";
-import Home from "app-component/home/home";
-import Cat from "app-component/cat/cat";
+import { Home, Cat, CatItem } from "app-component";
 
 const Routes = () => {
   return (
     <Router history={History}>
       <Home>
-        <Route path="/">
+        <Route path="/" exact>
           <Cat />
+        </Route>
+        <Route path="/:breedId" exact>
+          <CatItem />
         </Route>
       </Home>
     </Router>

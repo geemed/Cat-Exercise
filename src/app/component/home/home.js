@@ -3,9 +3,9 @@ import { Container } from "react-bootstrap";
 
 const Home = ({ children }) => {
   return (
-    <Container>
-      <section>{children}</section>
-    </Container>
+    <section>
+      <Container>{children}</Container>
+    </section>
   );
 };
 
