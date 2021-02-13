@@ -60,7 +60,10 @@ const config = {
   plugins: [
     new CleanWebpackPlugin({
       verbose: true,
-      cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, "dist")],
+      cleanOnceBeforeBuildPatterns: [
+        path.resolve(__dirname, "dist/js"),
+        path.resolve(__dirname, "dist/css"),
+      ],
     }),
     new EventHooksPlugin({
       beforeRun: (compilation, done) => {

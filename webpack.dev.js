@@ -7,5 +7,6 @@ module.exports = {
     historyApiFallback: true,
     open: true,
     port: 3000,
+    host: "localhost",
   },
 };
